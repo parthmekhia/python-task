@@ -27,7 +27,7 @@ jobs:
     - name: Deploy to AWS EC2
       run: |
         if [ ${{ github.ref }} == 'refs/heads/prod' ]; then
-        ssh -i "Assignment.pem" ubuntu@ec2-54-242-71-152.compute-1.amazonaws.com "cd ~/python-task && git pull origin prod && python main.py"
+        ssh -i "Assignment.pem" ubuntu@ec2-54-242-71-152.compute-1.amazonaws.com "cd /home/ubuntu && git pull origin prod && python main.py"
         elif [ ${{ github.ref }} == 'refs/heads/test' ]; then
-        ssh -i "Assignment.pem" ubuntu@ec2-3-88-228-72.compute-1.amazonaws.com "cd ~/python-task && git pull origin test && python main.py"
+        ssh -i "Assignment.pem" ubuntu@ec2-3-88-228-72.compute-1.amazonaws.com "cd /home/ubuntu && git pull origin test && python main.py"
         fi
