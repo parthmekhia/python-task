@@ -1,1 +1,1 @@
-print ("This is my task on test")
+print ("This is my task on test.")
