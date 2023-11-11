@@ -24,6 +24,24 @@ jobs:
       run: |
         python -m pip install --upgrade pip
 
+    - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+          sudo chmod 600 ~/.ssh/private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          sudo chmod 600 ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_HOSTNAME}}
+      - name: SSH into EC2
+        run: >
+          ssh -i ~/.ssh/private.key -tt username@hostname
+          "
+            echo 'Welcome to EC2'
+          "    
+
     - name: Deploy to AWS EC2
       run: |
         if [ ${{ github.ref }} == 'refs/heads/prod' ]; then
