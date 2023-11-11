@@ -20,7 +20,7 @@ jobs:
         python-version: '3.10'
         add-path: true
     - run: pip install -r requirements.txt
-    - run: python main.py    
+    - run: python main.py > output.txt   
         
     - name: update Python
       run: |
@@ -40,8 +40,8 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
           if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
-            ssh -i Assignment.pem ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin prod && python main.py"
+            ssh -i Assignment.pem ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin prod && echo "Hey here is new update :" && echo < output.txt"
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            ssh -i Assignment.pem ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin test && python main.py"
+            ssh -i Assignment.pem ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin test && "Hey here is new update :" && echo < output.txt"
           fi
         fi
