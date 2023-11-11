@@ -32,8 +32,8 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
           if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
-            ssh -i Assignment.pem ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com "/home/ubuntu/python-task && git pull origin prod && python main.py"
+            ssh -i Assignment.pem ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com "/home/ubuntu/python-task/main.py && git pull origin prod && python main.py"
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            ssh -i Assignment.pem ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com "/home/ubuntu/python-task && git pull origin test && python main.py"
+            ssh -i Assignment.pem ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com "/home/ubuntu/python-task/main.py && git pull origin test && python main.py"
           fi
         fi
