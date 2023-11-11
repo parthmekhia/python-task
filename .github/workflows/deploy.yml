@@ -31,10 +31,7 @@ jobs:
       run: |
         chmod 600 Assignment.pem
        
-    - name: Configure SSH
-      run: |
-        mkdir -p $HOME/.ssh
-        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > $HOME/.ssh/config
+
 
     - name: Deploy to EC2
       run: |
