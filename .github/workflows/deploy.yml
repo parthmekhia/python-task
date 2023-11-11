@@ -32,8 +32,8 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
           if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
-            scp -i Assignment.pem -r . ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com:/home/ubuntu/python-task
+            scp -o StrictHostKeyChecking=no -i Assignment.pem -r . ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com:/home/ubuntu/python-task
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            scp -i Assignment.pem -r . ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com:/home/ubuntu/python-task
+            scp -o StrictHostKeyChecking=no -i Assignment.pem -r . ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com:/home/ubuntu/python-task
           fi
         fi
