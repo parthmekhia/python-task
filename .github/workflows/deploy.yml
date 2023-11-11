@@ -25,6 +25,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y python3
 
+    - name: Run Python script
+      run: |
+        /home/ubuntu/main.py
+
+
 
     - name: Set Permissions for Private Key
       run: |
