@@ -1,9 +1,9 @@
-name: Deploy Python Project
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - main
+      - prod
       - test
 
 jobs:
@@ -17,20 +17,31 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
-
-    - name: Install dependencies
+        python-version: '3.10'
+        add-path: true
+    - run: pip install -r requirements.txt
+    - run: python main.py    
+        
+    - name: update Python
       run: |
-        pip install -r requirements.txt
+        sudo apt-get update
+        sudo apt-get install -y python3
+
+    - name: Set Permissions for Private Key
+      run: |
+        chmod 600 Assignment.pem
+       
+    - name: Configure SSH
+      run: |
+        mkdir -p $HOME/.ssh
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > $HOME/.ssh/config
 
     - name: Deploy to EC2
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            # Deploy to prod EC2 instance
-            scp -i ${{ secrets.SSH_PRIVATE_KEY }} -r . ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com:/home/ubuntu/python-task
+          if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
+            ssh -i Assignment.pem ubuntu@ec2-18-215-170-26.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin prod"
           elif [ "${{ github.ref }}" == "refs/heads/test" ]; then
-            # Deploy to test EC2 instance
-            scp -i ${{ secrets.SSH_PRIVATE_KEY }} -r . ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com:/home/ubuntu/python-task
+            ssh -i Assignment.pem ubuntu@ec2-18-205-21-72.compute-1.amazonaws.com "cd /home/ubuntu/python-task && git pull origin test"
           fi
         fi
