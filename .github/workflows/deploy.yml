@@ -27,7 +27,7 @@ jobs:
 
     - name: Run Python script
       run: |
-        /home/ubuntu/main.py
+        main.py
 
 
 
