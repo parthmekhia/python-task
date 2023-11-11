@@ -21,8 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
-
+        pip install -r requirements.txtt
     - name: Deploy to EC2
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
