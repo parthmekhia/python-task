@@ -22,8 +22,7 @@ jobs:
     - name: Set Permissions for Private Key
       run: |
         chmod 600 Assignment.pem
-        chmod 600 /home/ubuntu/python-task/main.py
-
+       
     - name: Configure SSH
       run: |
         mkdir -p $HOME/.ssh
